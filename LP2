@@ -1,28 +1,31 @@
-arr = list(map(int, input("Enter sorted array: ").split()))
+from flask import Flask
 
-key = int(input("Enter element to search: "))
+app = Flask(__name__)
 
-low = 0
-high = len(arr) - 1
+@app.route('/')
 
-found = False
+def binary_search():
 
-while low <= high:
+    arr = [1,2,3,4,5,6,7,8,9]
+    key = 5
 
-    mid = (low + high) // 2
+    low = 0
+    high = len(arr)-1
 
-    if arr[mid] == key:
-        found = True
-        break
+    while low <= high:
 
-    elif arr[mid] < key:
-        low = mid + 1
+        mid = (low + high)//2
 
-    else:
-        high = mid - 1
+        if arr[mid] == key:
+            return "Element Found"
 
-if found:
-    print("Element Found")
+        elif arr[mid] < key:
+            low = mid + 1
 
-else:
-    print("Element Not Found")
+        else:
+            high = mid - 1
+
+    return "Element Not Found"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)
